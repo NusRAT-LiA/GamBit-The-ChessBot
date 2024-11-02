@@ -4,7 +4,7 @@ pygame.init()
 pygame.font.init()
 
 class Settings:
-    BOARD_SIZE = 8
+    # BOARD_SIZE = 8
     WIDTH, HEIGHT = 800, 800
     WINDOW_ICON_SIZE = 30
     FPS = 60

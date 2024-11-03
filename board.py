@@ -26,3 +26,6 @@ class Board:
 
     def is_empty_square(self, row, col):
         return self.get_square(row, col) == "--"
+    
+    def is_valid_square(row, col):
+        return 0 <= row < BOARD_ROWS and 0 <= col < BOARD_COLS

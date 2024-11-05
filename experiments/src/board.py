@@ -2,6 +2,13 @@ from const import *
 from square import Square
 from piece import *
 
+from pawn import Pawn
+from knight import Knight
+from bishop import Bishop
+from king import King
+from queen import Queen
+from rook import Rook
+
 class Board:
     def __init__(self):
         self.squares = [[0,0,0,0,0] for row in range(ROWS)]

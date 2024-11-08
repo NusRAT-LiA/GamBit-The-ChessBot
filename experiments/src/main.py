@@ -30,10 +30,6 @@ class Main():
         board = self.game.board
 
         while True:
-
-            #game.show_bg(screen)
-            #game.show_moves(screen)
-            #game.show_pieces(screen)
             self.show_methods(screen)
 
             if dragger.dragging:
@@ -57,25 +53,13 @@ class Main():
 
                         dragger.save_initial(event.pos)
                         dragger.drag_piece(piece)
-
-                        #show methods
-                        #game.show_bg(screen)
-                        #game.show_moves(screen)
-                        #game.show_pieces(screen)
                         self.show_methods(screen)
 
                 elif event.type == pygame.MOUSEMOTION:
                     if dragger.dragging:
-                        dragger.update_mouse(event.pos)
-
-                        #show methods
-                        self.show_methods(screen)
-                        #game.show_bg(screen)
-                        #game.show_moves(screen)
-                        #game.show_pieces(screen)
                         
-
-
+                        dragger.update_mouse(event.pos)
+                        self.show_methods(screen)
                         dragger.update_blit(screen)
 
 

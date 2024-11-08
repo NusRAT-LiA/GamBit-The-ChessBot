@@ -29,11 +29,11 @@ class Board:
         for col in range(COLS):
             self.squares[row_pawn][col] = Square(row_pawn, col, Pawn(color) )
 
-        self.squares[row_other][0] = Square(row_other,col, Rook(color) )
-        self.squares[row_other][1] = Square(row_other, col, Knight(color))
-        self.squares[row_other][2] = Square(row_other, col, Bishop(color))
-        self.squares[row_other][3] = Square(row_other, col, Queen(color))
-        self.squares[row_other][4] = Square(row_other, col, King(color))
+        self.squares[row_other][0] = Square(row_other, 0, Rook(color) )
+        self.squares[row_other][1] = Square(row_other, 1, Knight(color))
+        self.squares[row_other][2] = Square(row_other, 2, Bishop(color))
+        self.squares[row_other][3] = Square(row_other, 3, Queen(color))
+        self.squares[row_other][4] = Square(row_other, 4, King(color))
 
 
     def calc_moves(self, piece, row, col):

@@ -15,19 +15,26 @@ class Main():
         pygame.display.set_caption("mini_chess_prottush")
         self.game = Game()
 
+
+    def show_methods(self, screen):
+        self.game.show_bg(screen)
+        self.game.show_moves(screen)
+        self.game.show_pieces(screen)   
+
     def mainloop(self):
+        
         
         game = self.game
         screen = self.screen
         dragger = self.game.dragger
         board = self.game.board
-        
 
         while True:
 
-            game.show_bg(screen)
-            game.show_moves(screen)
-            game.show_pieces(screen)
+            #game.show_bg(screen)
+            #game.show_moves(screen)
+            #game.show_pieces(screen)
+            self.show_methods(screen)
 
             if dragger.dragging:
                 dragger.update_blit(screen)
@@ -52,20 +59,23 @@ class Main():
                         dragger.drag_piece(piece)
 
                         #show methods
-                        game.show_bg(screen)
-                        game.show_moves(screen)
-                        game.show_pieces(screen)
-                        
+                        #game.show_bg(screen)
+                        #game.show_moves(screen)
+                        #game.show_pieces(screen)
+                        self.show_methods(screen)
 
                 elif event.type == pygame.MOUSEMOTION:
                     if dragger.dragging:
                         dragger.update_mouse(event.pos)
 
                         #show methods
+                        self.show_methods(screen)
+                        #game.show_bg(screen)
+                        #game.show_moves(screen)
+                        #game.show_pieces(screen)
+                        
 
-                        game.show_bg(screen)
-                        game.show_moves(screen)
-                        game.show_pieces(screen)
+
                         dragger.update_blit(screen)
 
 
@@ -78,6 +88,13 @@ class Main():
 
             pygame.display.update()
 
+    
+
+        
+            
+
+
 main = Main()
 
 main.mainloop()
+

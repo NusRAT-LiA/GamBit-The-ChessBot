@@ -1,4 +1,4 @@
-from base_piece import BasePiece
+from .base_piece import BasePiece
 from move import Move
 from board import is_valid_square
 

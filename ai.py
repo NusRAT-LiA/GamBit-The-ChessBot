@@ -51,11 +51,11 @@ piecePositionalScores = {"N": knightGoodPositions, "B": bishopGoodPositions, "Q"
 
 CHECKMATE = float('inf')
 STALEMATE = 0
-DEPTH = 3
+DEPTH = 4
 
 
-def findRandomMove(validMoves):
-    return validMoves[random.randint(0, len(validMoves)-1)]
+# def findRandomMove(validMoves):
+#     return validMoves[random.randint(0, len(validMoves)-1)]
 
 
 def findBestMove(gamestate, validMoves):
@@ -63,36 +63,51 @@ def findBestMove(gamestate, validMoves):
     nextMove = None
     random.shuffle(validMoves)
     counter = 0
-    MinMaxWithPruning(gamestate, validMoves, DEPTH, -CHECKMATE,
-                      CHECKMATE, 1 if gamestate.whiteToMove else -1)
+    MinimaxWithPruning(gamestate, validMoves, DEPTH, -CHECKMATE,
+                      CHECKMATE, True if gamestate.whiteToMove else False)
     print(f"{counter} possible moves in depth {DEPTH}")
     return nextMove
 
 
-def MinMaxWithPruning(gamestate, validMoves, depth, alpha, beta, turnMultiplier):
+def MinimaxWithPruning(gamestate, validMoves, depth, alpha, beta, isMaximizingPlayer):
     global nextMove, counter
     counter += 1
+
     if depth == 0:
-        return turnMultiplier * scoreBoard(gamestate)
+        return scoreBoard(gamestate)
 
-    maxScore = -CHECKMATE
-    for move in validMoves:
-        gamestate.makeMove(move)
-        nextMoves = gamestate.getValidMoves()
-        score = -MinMaxWithPruning(gamestate, nextMoves,
-                                   depth-1, -beta, -alpha, -turnMultiplier)
-        if score > maxScore:
-            maxScore = score
-            if depth == DEPTH:
-                nextMove = move
+    if isMaximizingPlayer:
+        maxScore = -CHECKMATE
+        for move in validMoves:
+            gamestate.makeMove(move)
+            nextMoves = gamestate.getValidMoves()
+            score = MinimaxWithPruning(gamestate, nextMoves, depth - 1, alpha, beta, False)  # Switch to minimizing player
+            if score > maxScore:
+                maxScore = score
+                if depth == DEPTH:  # Store the best move only at the root
+                    nextMove = move
+            gamestate.undoMove()
+            alpha = max(alpha, maxScore)
+            if alpha >= beta:  # Beta cutoff
+                break
+        return maxScore
 
-        gamestate.undoMove()
-        if maxScore > alpha:
-            alpha = maxScore
-        if alpha >= beta:       # pruning
-            break
+    else:  # Minimizing player
+        minScore = CHECKMATE
+        for move in validMoves:
+            gamestate.makeMove(move)
+            nextMoves = gamestate.getValidMoves()
+            score = MinimaxWithPruning(gamestate, nextMoves, depth - 1, alpha, beta, True)  # Switch to maximizing player
+            if score < minScore:
+                minScore = score
+                if depth == DEPTH:  # Store the best move only at the root
+                    nextMove = move
+            gamestate.undoMove()
+            beta = min(beta, minScore)
+            if alpha >= beta:  # Alpha cutoff
+                break
+        return minScore
 
-    return maxScore
 
 
 # positive is good for white and negative is good for black
